@@ -13,4 +13,7 @@ permissions:
 
 jobs:
   call-doc-generator:
-    uses: heidsEm/heidsfromheaven/.github/workflows/reusable-onboarding-change-doc.yaml
+    if: |
+      contains(github.event.pull_request.title, 'Onboarding') ||
+      contains(github.event.pull_request.title, 'Deployment')
+    uses: ./.github/workflows/reusable-onboarding-change-doc.yaml
