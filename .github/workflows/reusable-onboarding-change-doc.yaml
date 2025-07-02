@@ -38,10 +38,14 @@ jobs:
               - 'config.json'
               - 'policies/api.xml'
 
+      - name: Debug Changed Files
+        run: |
+          echo "changed_file_list: ${{ steps.file-change.outputs.changed_files_json }}"
+
       - name: Run filechange.py
         id: filter
         env:
-          changed_file_list: ${{ steps.file-change.outputs.changed_files_changed }}
+          changed_file_list: ${{ steps.file-change.outputs.changed_files_json }}
           github_repository_name: ${{ github.repository }}
           github_branch_name: ${{ github.event.pull_request.head.ref }}
         run: |
