@@ -1,0 +1,12 @@
+name: Onboarding Change Doc
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'config.json'
+      - 'policies/api.xml'
+
+jobs:
+  call-doc-generator:
+    uses: ./.github/workflows/reusable-onboarding-change-doc.yaml

@@ -1,0 +1,66 @@
+name: Reusable Azure APIM Change Doc
+
+on:
+  workflow_call:
+
+jobs:
+  generate_document:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.base.ref == 'main' }}
+
+    permissions:
+      pull-requests: read
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Create virtual environment and install dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip
+          pip install docxtpl jinja2
+
+      - name: Detect changed files
+        id: file-change
+        uses: dorny/paths-filter@v3
+        with:
+          list-files: json
+          filters: |
+            changed:
+              - 'config.json'
+              - 'policies/api.xml'
+
+      - name: Run filechange.py
+        id: filter
+        env:
+          changed_file_list: ${{ steps.file-change.outputs.changed_files_changed }}
+          github_repository_name: ${{ github.repository }}
+          github_branch_name: ${{ github.event.pull_request.head.ref }}
+        run: |
+          source .venv/bin/activate
+          python ./internal-scripts/scripts/generate-change-doc/src/filechange.py
+
+      - name: Generate Word Document
+        env:
+          github_branch_name: ${{ github.event.pull_request.base.ref }}
+          PROCESSED_FILES: ${{ steps.filter.outputs.processed_files }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY_NAME: ${{ github.repository }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          source .venv/bin/activate
+          python ./internal-scripts/scripts/generate-change-doc/src/change_doc.py
+
+      - name: Upload Generated Document
+        uses: actions/upload-artifact@v4
+        with:
+          name: azure-apim-change-doc
+          path: ./internal-scripts/scripts/generate-change-doc/output/DevOpsChangeRequest_Documentation.docx

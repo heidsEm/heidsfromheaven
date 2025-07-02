@@ -1,0 +1,127 @@
+{
+	"product": {
+	  "product_id": "InternalOperations-ServiceNow-ProdGeoHierarchy-V1",
+	  "display_name": "InternalOperations-ServiceNow-ProdGeoHierarchy-V1",
+	  "subscription_required": true,
+	  "subscriptions_limit": 2,
+	  "approval_required": false
+	},
+	"api": {
+		"name": "InternalOperations-ServiceNow-ProdGeoHierarchy-V1",
+		"display_name": "InternalOperations-ServiceNow-ProdGeoHierarchy-V1",
+		"description": "Information about Product Hierarchy",
+		"path": "it/itserviceoperation/v1/rds_productandgeositehierarchy",
+		"revision": "1",
+		"policy": "policies/api.xml",
+		"api_type": "http",
+		"protocols": ["https"],
+		"service_url": "https://servicesboomiazureqart.pg.com:9093/ws/simple",
+		"subscription_required": false
+	},
+	"named_values": {
+		"ratelimit-calls": {
+		  "secret": true,
+		  "value": "1500"
+		},
+		"ratelimit-renewal-period": {
+		  "secret": true,
+		  "value": "60"
+		},
+		"quota-calls": {
+		  "secret": true,
+		  "value": "834"
+		},
+		"quota-renewal-period": {
+		  "secret": true,
+		  "value": "300"
+		},  
+		"request-size": {
+		  "secret": true,
+		  "value": "200000"
+		},
+		"response-size": {
+		  "secret": true,
+		  "value": "400000"
+		},
+		"allowed-ips": {
+		  "secret": true,
+		  "value": "199.91.139.160,199.91.141.12,149.96.6.9,149.96.6.10,149.96.6.11,149.96.6.12,149.96.6.13,149.96.6.14,149.96.5.9,149.96.5.10,149.96.5.11,149.96.5.12,149.96.5.13,149.96.5.14"
+		},
+		"allowed-cidrs": {
+			"secret": true,
+			"value": "199.91.136.8/29,199.91.140.8/29,149.96.5.8/29,149.96.6.8/29"
+		},
+		"geosite-backend": {
+		  "secret": true,
+		  "value": "https://servicesboomiazureqart.pg.com:9093/ws/simple"
+		},
+		"username": {
+        "secret": true,
+        "value": "DC7908"
+		},
+		"password": {
+			"secret": true,
+				"value_from_key_vault": {
+					"secret_id": "https://kv-na-glb-eai-nonprod-01.vault.azure.net/secrets/InternalOperations-ServiceNow-ProdGeoHierarchy-V1-password"
+			}
+		}		 		 
+	},
+	"operations": {
+		"GET-ProductHierarchy": {
+		  "operation_id": "GET-ProductHierarchy",
+		  "display_name": "GET-ProductHierarchy",
+		  "method": "GET",
+		  "url_template": "/producthierarchy",
+		  "description": "Information about Product Hierarchy",
+		  "template_parameter": null,
+		  "request": {
+			"query_parameter": null,
+			"header": null,
+			"representation": null
+		  },
+		  "response": [
+			{
+			  "status_code": 200,
+			  "description": "Success",
+			  "representation": null,
+			  "headers": null
+			},
+			{
+			  "status_code": 500,
+			  "description": "Sorry Internal server error occured",
+			  "representation": null,
+			  "headers": null
+			}
+		  ],
+		  "policy": "policies/api-op-product-policy.xml"
+		},
+		"GET-GeoSiteHierarchy": {
+			"operation_id": "GET-GeoSiteHierarchy",
+			"display_name": "GET-GeoSiteHierarchy",
+			"method": "GET",
+			"url_template": "/geositehierarchy",
+			"description": "Retrieve the Supplier, Site, Country and Product Hierarchy information from MDM",
+			"template_parameter": null,
+			"request": {	
+				"query_parameter": null,
+				"header": null,
+				"representation": null
+			},
+			"response": [
+			{
+				"status_code": 200,
+				"description": "Success",
+				"representation": null,
+				"headers": null
+			},
+			{
+				"status_code": 500,
+				"description": "Sorry Internal server error occured",
+				"representation": null,
+				"headers": null
+			}
+		],
+		"policy": "policies/api-op-geosite-policy.xml"	
+		}	
+	}		
+}

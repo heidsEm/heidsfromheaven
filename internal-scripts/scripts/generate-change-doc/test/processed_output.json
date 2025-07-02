@@ -1,0 +1,23 @@
+{
+  "valid_file_list": [
+    {
+      "files": [
+        {
+          "name": "config.json"
+        }
+      ],
+      "objectName": "config.json",
+      "objectType": "AZURE_CONFIG"
+    },
+    {
+      "files": [
+        {
+          "name": "policies/api.xml"
+        }
+      ],
+      "objectName": "api.xml",
+      "objectType": "AZURE_POLICY"
+    }
+  ],
+  "skip_file_list": []
+}
