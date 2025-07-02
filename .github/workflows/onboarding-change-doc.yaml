@@ -12,8 +12,25 @@ permissions:
   pull-requests: read
 
 jobs:
+  check-pr-title:
+    runs-on: ubuntu-latest
+    outputs:
+      should-run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Check PR title
+        id: check
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          echo "PR Title: $TITLE"
+          if [[ "$TITLE" == *Onboarding* || "$TITLE" == *Deployment* ]]; then
+            echo "PR Title matches. Proceeding."
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "ERROR: PR title must contain 'Onboarding' or 'Deployment'."
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
+
   call-doc-generator:
-    if: |
-      contains(github.event.pull_request.title, 'Onboarding') ||
-      contains(github.event.pull_request.title, 'Deployment')
+    needs: check-pr-title
+    if: needs.check-pr-title.outputs.should_run == 'true'
     uses: ./.github/workflows/reusable-onboarding-change-doc.yaml
