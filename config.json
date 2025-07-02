@@ -1,6 +1,6 @@
 {
 	"product": {
-	  "product_id": "InternalOperations-ServiceNow-ProdGeoHierarchy-V1",
+	  "product_id": "InternalOperations-ServiceNow-ProdGeoHierarchy-V2",
 	  "display_name": "InternalOperations-ServiceNow-ProdGeoHierarchy-V1",
 	  "subscription_required": true,
 	  "subscriptions_limit": 2,
