@@ -8,8 +8,9 @@ on:
       - 'policies/api.xml'
 
 permissions:
+  contents: read
   pull-requests: read
 
 jobs:
   call-doc-generator:
-    uses: ./.github/workflows/reusable-onboarding-change-doc.yaml
+    uses: heidsEm/heidsfromheaven/.github/workflows/reusable-onboarding-change-doc.yaml
