@@ -7,6 +7,9 @@ on:
       - 'config.json'
       - 'policies/api.xml'
 
+permissions:
+  pull-requests: read
+
 jobs:
   call-doc-generator:
     uses: ./.github/workflows/reusable-onboarding-change-doc.yaml
